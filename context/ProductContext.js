@@ -1,6 +1,7 @@
-import { createContext, useContext, useReducer } from "react";
-import { db } from "../firebase-config";
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { db } from "../firebase/config";
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
+import { DataReducer } from "./DataReducer";
 
 const ProductContext = createContext();
 
@@ -114,12 +115,12 @@ const ProductProvider = ({children}) => {
 
 
     return (
-        <ProductContext.Provider>
+        <ProductContext.Provider value={{productState, productDispatch}}>
             {children}
         </ProductContext.Provider>
     )
 };
 
-const useProduct = useContext(ProductContext);
+const useProduct = () => useContext(ProductContext);
 
 export {ProductProvider, useProduct}

@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { FlatList, Image, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { styles } from "../../AppStyles";
+import { useProduct } from "../../context/ProductContext";
 
 const data = [
     {
@@ -35,23 +36,24 @@ const data = [
   
 
 const WoodenScreen = () => {
+  const  {productState: {wooden} } = useProduct();
     return (
       <View style={styles.container}>
           <SafeAreaView style={styles.container}>
           <ScrollView>
-          {data.map(section => {
+          {wooden.map(section => {
             return (
-              <View key={section.title}>
+              <View key={section.categoryName}>
                 <View style={styles.header}>
                   <View style={styles.line} />
-                  <Text style={styles.title}>{section.title}</Text>
+                  <Text style={styles.title}>{section.categoryName}</Text>
                   <View style={styles.line} />
                 </View>
                   <FlatList
                     data={section.doors}
                     renderItem={({ item }) => (
                       <View style={styles.item} key={item.name}>
-                        <Image source={item.image} style={styles.image} />
+                        <Image source={{uri : item.imageSource}} style={styles.image} />
                         <Text style={styles.text}>{item.name}</Text>
                       </View>
                     )}
